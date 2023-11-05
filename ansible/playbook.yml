@@ -1,0 +1,7 @@
+---
+- name: Setup terraform state S3 bucket
+  hosts: all
+  gather_facts: false
+  roles:
+    - setup
+    - s3bucket

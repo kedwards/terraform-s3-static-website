@@ -1,0 +1,10 @@
+---
+- name: Create s3 buckets stack
+  amazon.aws.cloudformation:
+    stack_name: "{{ stack_prefix }}-s3buckets"
+    state: present
+    region: "{{ region }}"
+    template: "{{ role_path }}/files/terraform_state.yml"
+    create_changeset: "{{ create_changeset }}"
+    template_parameters:
+      TerraformStateBucketName: "{{ terraform_state_bucket_name }}"

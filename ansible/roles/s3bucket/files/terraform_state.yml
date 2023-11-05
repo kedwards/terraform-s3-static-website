@@ -1,0 +1,35 @@
+---
+Description: Terraform state s3 bucket
+
+Parameters:
+  TerraformStateBucketName:
+    Type: String
+    Description: Name of the Terraform State S3 Bucket
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref TerraformStateBucketName
+
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:ListBucket
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+            Resource:
+              - !Sub arn:aws:s3:::${TerraformStateBucketName}
+          - Action:
+              - s3:GetObject
+              - s3:PutObject
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+            Resource:
+              - !Sub arn:aws:s3:::${TerraformStateBucketName}/*

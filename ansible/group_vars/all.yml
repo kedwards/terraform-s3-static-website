@@ -1,0 +1,5 @@
+create_changeset: false
+region: "{{ env_region }}"
+stack_prefix: keqp
+
+terraform_state_bucket_name: "{{ stack_prefix }}-tfstate-{{ env_tag }}-{{ region }}"
